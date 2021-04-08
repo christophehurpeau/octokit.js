@@ -362,6 +362,32 @@ Learn more about [how authentication strategies work](https://github.com/octokit
 
 ### REST API
 
+There are two ways of using the REST API, the [`octokit.rest.*` endpoint methods](#endpoint-methods) and [`octokit.request`](#arbitrary-requests). Both work exactly the same, `octokit.rest.*` are just convenience methods that use `octokit.request` internally.
+
+For example
+
+```js
+await octokit.rest.issues.create({
+  owner: "octocat",
+  repo: "hello-world",
+  title: "Hello, world!",
+  body: "I created this issue using Octokit!",
+});
+```
+
+Is the same as
+
+```js
+await octokit.request("POST /repos/{owner}/{repo}/issues", {
+  owner: "octocat",
+  repo: "hello-world",
+  title: "Hello, world!",
+  body: "I created this issue using Octokit!",
+});
+```
+
+`octokit.request` can be used to send requests to other domains by passing a full URL. It can also be used to send requests to endpoints that are not (yet) documented on [GitHub's REST API documentation](https://docs.github.com/rest).
+
 #### Endpoint methods
 
 **plugin**: [`@octokit/plugin-rest-endpoint-methods`](https://github.com/octokit/plugin-rest-endpoint-methods.js/#readme).
