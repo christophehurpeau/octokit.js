@@ -18,8 +18,8 @@ The `octokit` package integrates the three main Octokit libraries
   - [Constructor options](#constructor-options)
   - [Authentication](#authentication)
   - [REST API](#rest-api)
-    - [Arbitrary requests](#arbitrary-requests)
     - [Endpoint methods](#endpoint-methods)
+    - [Arbitrary requests](#arbitrary-requests)
     - [Pagination](#pagination)
     - [Media Type previews and formats](#media-type-previews-and-formats)
   - [GraphQL API queries](#graphql-api-queries)
@@ -362,6 +362,27 @@ Learn more about [how authentication strategies work](https://github.com/octokit
 
 ### REST API
 
+#### Endpoint methods
+
+**plugin**: [`@octokit/plugin-rest-endpoint-methods`](https://github.com/octokit/plugin-rest-endpoint-methods.js/#readme).
+
+Every REST API endpoint has an according method for better code readability and developer convenience.
+
+Example: [Create an issue](https://docs.github.com/en/rest/reference/issues#create-an-issue)
+
+```js
+await octokit.rest.issues.create({
+  owner: "octocat",
+  repo: "hello-world",
+  title: "Hello, world!",
+  body: "I created this issue using Octokit!",
+});
+```
+
+The REST API endpoint methods are generated automatically from [GitHub's OpenAPI specification](https://github.com/github/rest-api-description/). We track operation ID or parameter name changes in order to implement deprecation warnings and reduce the frequency of breaking changes.
+
+Every endpoint method is an instance of `octokit.request` with defaults set, so it supports the same parameters as well as the `.endpoint()` API.
+
 #### Arbitrary requests
 
 **standalone method**: [`@octokit/request`](https://github.com/octokit/request.js#readme)
@@ -390,27 +411,6 @@ The 1st argument is the REST API route as listed in GitHub's API documentation. 
 See the standalone [`@octokit/request`](https://github.com/octokit/request.js#readme) module for more details on the `.request()` APIs.
 
 If you only need the request options, but want to send the actual request using your own method, use `octokit.request.endpoint(route, parameters)`. See the standalone [`@octokit/endpoint`](https://github.com/octokit/endpoint.js#readme) module for more details on the `.endpoint()` APIs.
-
-#### Endpoint methods
-
-**plugin**: [`@octokit/plugin-rest-endpoint-methods`](https://github.com/octokit/plugin-rest-endpoint-methods.js/#readme).
-
-Every REST API endpoint has an according method for better code readability and developer convenience.
-
-Example: [Create an issue](https://docs.github.com/en/rest/reference/issues#create-an-issue)
-
-```js
-await octokit.rest.issues.create({
-  owner: "octocat",
-  repo: "hello-world",
-  title: "Hello, world!",
-  body: "I created this issue using Octokit!",
-});
-```
-
-The REST API endpoint methods are generated automatically from [GitHub's OpenAPI specification](https://github.com/github/rest-api-description/). We track operation ID or parameter name changes in order to implement deprecation warnings and reduce the frequency of breaking changes.
-
-Every endpoint method is an instance of `octokit.request` with defaults set, so it supports the same parameters as well as the `.endpoint()` API.
 
 #### Pagination
 
